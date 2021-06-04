@@ -2,12 +2,13 @@ package br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares;
 
 public class CampoDeMessagem {
 
-    private String mensagem;
     private String nomeDoCampo;
+    private String mensagem;
 
-    public CampoDeMessagem(String mensagem, String nomeDoCampo) {
-        this.mensagem = mensagem;
+
+    public CampoDeMessagem(String nomeDoCampo,String mensagem) {
         this.nomeDoCampo = nomeDoCampo;
+        this.mensagem = mensagem;
     }
 
     public String getMensagem() {

@@ -1,5 +1,6 @@
 package br.com.zupacademy.projetoproposta.exceptionhandler;
 
+import br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares.CampoDeMessagem;
 import br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares.ErroPadrao;
 import br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares.ValidadorDeErro;
 import org.springframework.http.HttpStatus;
@@ -21,5 +22,11 @@ public class TratadorDeException {
             erro.addErro(x.getField(), x.getDefaultMessage());
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(DocumentException.class)
+    public ResponseEntity<CampoDeMessagem> methodArgumentNotValidException(DocumentException e){
+        CampoDeMessagem campoDeErro = new CampoDeMessagem(e.getHttpStatus().getReasonPhrase(), e.getMessage());
+        return ResponseEntity.status(e.getHttpStatus()).body(campoDeErro);
     }
 }
