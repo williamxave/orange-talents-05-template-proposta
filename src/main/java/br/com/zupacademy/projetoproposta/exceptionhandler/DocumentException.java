@@ -1,10 +1,6 @@
 package br.com.zupacademy.projetoproposta.exceptionhandler;
 
-import br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares.CampoDeMessagem;
 import org.springframework.http.HttpStatus;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DocumentException extends Exception{
 
@@ -16,7 +12,6 @@ public class DocumentException extends Exception{
         this.httpStatus = httpStatus;
         this.mensagem = mensagem;
     }
-
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
