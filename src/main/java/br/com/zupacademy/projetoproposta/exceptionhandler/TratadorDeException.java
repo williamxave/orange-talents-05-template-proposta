@@ -31,8 +31,8 @@ public class TratadorDeException {
         return ResponseEntity.status(e.getHttpStatus()).body(campoDeErro);
     }
 
-//    @ExceptionHandler(FeignException.class)
-//    public ResponseEntity<ErroPadrao> feignException(FeignException e)  {
+//    @ExceptionHandler(FeignException.UnprocessableEntity.class)
+//    public ResponseEntity<ErroPadrao> feignException(FeignException.UnprocessableEntity e)  {
 //        ValidadorDeErro erro = new ValidadorDeErro(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validação", System.currentTimeMillis());
 //            erro.addErro(e.getMessage().replace(e.getMessage(),"Documento"), "CPF ou CNPJ é inválido");
 //        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(erro);

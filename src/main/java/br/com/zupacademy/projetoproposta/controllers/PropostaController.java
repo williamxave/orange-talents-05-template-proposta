@@ -5,6 +5,7 @@ import br.com.zupacademy.projetoproposta.dtos.AnalisarSolicitacaoResponse;
 import br.com.zupacademy.projetoproposta.dtos.PropostaRequest;
 import br.com.zupacademy.projetoproposta.exceptionhandler.DocumentException;
 import br.com.zupacademy.projetoproposta.models.Proposta;
+import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacao;
 import br.com.zupacademy.projetoproposta.repositories.PropostaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PropostaController {
     private PropostaRepository propostaRepository;
 
     @PostMapping
-    public ResponseEntity<?> cadastraProposta(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder builder) throws DocumentException{
+    public ResponseEntity<AnalisarSolicitacaoResponse> cadastraProposta(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder builder) throws DocumentException{
             //Verifica a duplicidade da proposta, transforma em model e salva no banco
             Proposta possivelProsta = request.verificaDuplicidadeDeDocumento(request,propostaRepository);
             //Manda a proposta para a api externa que vai fazer a analise
@@ -35,6 +36,9 @@ public class PropostaController {
             analisarSolicitacaoResponse.alteraStatusDaProposta(possivelProsta);
             propostaRepository.save(possivelProsta);
             URI uri = builder.path("/proposta/{id}").buildAndExpand(possivelProsta.getId()).toUri();
-            return ResponseEntity.created(uri).build();
+            if(possivelProsta.getStatusDeValidacao().equals(StatusDeValidacao.NAO_ELEGIVEL)){
+                return ResponseEntity.unprocessableEntity().body(analisarSolicitacaoResponse);
+            }
+            return ResponseEntity.created(uri).body(analisarSolicitacaoResponse);
         }
 }

@@ -1,14 +1,15 @@
 package br.com.zupacademy.projetoproposta.dtos;
 
+import br.com.zupacademy.projetoproposta.exceptionhandler.DocumentException;
 import br.com.zupacademy.projetoproposta.models.Proposta;
 import br.com.zupacademy.projetoproposta.models.PropostaFeign;
 import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacaoApiExterna;
 
 import feign.FeignException;
-import feign.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -48,7 +49,7 @@ public class AnalisarSolicitacaoRequest {
         return resultadoSolicitacao;
     }
 
-    public AnalisarSolicitacaoResponse validacaoDeDocumento(Proposta possivelProsta) {
+    public AnalisarSolicitacaoResponse validacaoDeDocumento(Proposta possivelProsta) throws DocumentException {
         logger.warn("Enviando sua proposta para validação!");
         //Recebe o a proposta, com ela cria o obj de analise
         AnalisarSolicitacaoRequest analisarSolicitacaoRequest = new AnalisarSolicitacaoRequest(
@@ -61,15 +62,19 @@ public class AnalisarSolicitacaoRequest {
             AnalisarSolicitacaoResponse analisarSolicitacaoResponse = propostaFeign.enviar(analisarSolicitacaoRequest);
             logger.info("Proposta aceita com sucesso!");
             return analisarSolicitacaoResponse;
-        } catch (FeignException e) {
+        } catch (FeignException.UnprocessableEntity e) {
             logger.error("Sua proposta foi negada. Documento está inválido!");
             //Se o documento estiver com restricao, retorna com o status de resticao
+            //Pode usa o ObjecMapper para fazer isso tbm
             return new AnalisarSolicitacaoResponse(
                     possivelProsta.getDocumento(),
                     possivelProsta.getNome(),
                     possivelProsta.getId(),
                     StatusDeValidacaoApiExterna.COM_RESTRICAO
             );
+        }catch (FeignException e){
+            logger.error("ErrorCode: 500! Servidor do serviço não está disponivel");
+          throw new DocumentException(HttpStatus.SERVICE_UNAVAILABLE, "Servidor do serviço não está disponivel!");
         }
     }
 }
