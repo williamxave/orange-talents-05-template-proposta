@@ -48,7 +48,6 @@ public class AnalisarSolicitacaoRequest {
         return resultadoSolicitacao;
     }
 
-
     public AnalisarSolicitacaoResponse validacaoDeDocumento(Proposta possivelProsta) {
         logger.warn("Enviando sua proposta para validação!");
         //Recebe o a proposta, com ela cria o obj de analise

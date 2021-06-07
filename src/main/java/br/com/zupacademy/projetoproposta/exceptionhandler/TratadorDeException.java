@@ -26,7 +26,7 @@ public class TratadorDeException {
     }
 
     @ExceptionHandler(DocumentException.class)
-    public ResponseEntity<CampoDeMessagem> methodArgumentNotValidException(DocumentException e) {
+    public ResponseEntity<CampoDeMessagem> documentException(DocumentException e) {
         CampoDeMessagem campoDeErro = new CampoDeMessagem(e.getHttpStatus().getReasonPhrase(), e.getMessage());
         return ResponseEntity.status(e.getHttpStatus()).body(campoDeErro);
     }

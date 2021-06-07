@@ -1,6 +1,5 @@
 package br.com.zupacademy.projetoproposta.models;
 
-
 import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacao;
 import br.com.zupacademy.projetoproposta.validators.CpfOuCnpf;
 
@@ -29,7 +28,7 @@ public class Proposta {
     @NotNull
     @Min(value = 0)
     private BigDecimal salario;
-    @Column(columnDefinition = "enum('ELEGIVEL','NAO_ELEGIVEL')")
+
     @Enumerated(EnumType.STRING)
     private StatusDeValidacao statusDeValidacao;
 
@@ -64,15 +63,4 @@ public class Proposta {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "Proposta{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", documento='" + documento + '\'' +
-                ", email='" + email + '\'' +
-                ", salario=" + salario +
-                ", statusDeValidacao=" + statusDeValidacao +
-                '}';
-    }
 }
