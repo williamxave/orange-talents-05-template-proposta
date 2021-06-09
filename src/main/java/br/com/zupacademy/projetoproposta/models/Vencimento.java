@@ -52,4 +52,7 @@ public class Vencimento {
         return cartao;
     }
 
+    public Cartao getCartao() {
+        return cartao;
+    }
 }
