@@ -32,7 +32,14 @@ public class Proposta {
     @Enumerated(EnumType.STRING)
     private StatusDeValidacao statusDeValidacao;
 
-    public Proposta(@NotBlank String nome,@NotBlank String documento,@NotBlank String email,@NotNull @Min(value = 0) BigDecimal salario) {
+    @OneToOne
+    @JoinColumn(name = "cartao_id")
+    private Cartao cartao;
+
+    public Proposta(@NotBlank String nome,
+                    @NotBlank String documento,
+                    @NotBlank String email,
+                    @NotNull @Min(value = 0) BigDecimal salario) {
         this.nome = nome;
         this.documento = documento;
         this.email = email;
@@ -41,6 +48,18 @@ public class Proposta {
 
     @Deprecated
     public Proposta(){
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public BigDecimal getSalario() {
+        return salario;
+    }
+
+    public Cartao getCartao() {
+        return cartao;
     }
 
     public String getNome() {
@@ -63,4 +82,7 @@ public class Proposta {
         return id;
     }
 
+    public void setCartao(Cartao cartao) {
+        this.cartao = cartao;
+    }
 }

@@ -2,16 +2,11 @@ package br.com.zupacademy.projetoproposta.dtos;
 
 import br.com.zupacademy.projetoproposta.exceptionhandler.DocumentException;
 import br.com.zupacademy.projetoproposta.models.Proposta;
-import br.com.zupacademy.projetoproposta.models.PropostaFeign;
 import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacao;
-import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacaoApiExterna;
 import br.com.zupacademy.projetoproposta.repositories.PropostaRepository;
 import br.com.zupacademy.projetoproposta.validators.CpfOuCnpf;
-import feign.FeignException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.Valid;

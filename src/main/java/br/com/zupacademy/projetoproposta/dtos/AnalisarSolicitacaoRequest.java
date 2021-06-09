@@ -2,7 +2,7 @@ package br.com.zupacademy.projetoproposta.dtos;
 
 import br.com.zupacademy.projetoproposta.exceptionhandler.DocumentException;
 import br.com.zupacademy.projetoproposta.models.Proposta;
-import br.com.zupacademy.projetoproposta.models.PropostaFeign;
+import br.com.zupacademy.projetoproposta.conexoesexternas.PropostaFeign;
 import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacaoApiExterna;
 
 import feign.FeignException;

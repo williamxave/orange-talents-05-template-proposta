@@ -1,4 +1,4 @@
-package br.com.zupacademy.projetoproposta.models;
+package br.com.zupacademy.projetoproposta.conexoesexternas;
 
 import br.com.zupacademy.projetoproposta.dtos.AnalisarSolicitacaoRequest;
 import br.com.zupacademy.projetoproposta.dtos.AnalisarSolicitacaoResponse;
