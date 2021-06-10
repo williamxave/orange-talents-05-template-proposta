@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(name = "accounts", url = "${url.accounts.api}")
+@FeignClient(name = "accounts", url = "${url.accounts.api}/api/cartoes")
 public interface SolicitaCartaoFeign {
 
     @RequestMapping(method = RequestMethod.GET, path = "?idProposta={idProposta}",consumes = "application/json")

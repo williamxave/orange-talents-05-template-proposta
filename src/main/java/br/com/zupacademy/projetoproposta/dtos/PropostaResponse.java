@@ -27,9 +27,9 @@ public class PropostaResponse {
         this.email = proposta.getEmail();
         this.salario = proposta.getSalario();
         this.statusDeValidacao = proposta.getStatusDeValidacao();
-        if (this.cartao == null){
+        if(this.cartao == null){
             new CartaoResponse();
-        }else {
+        }else{
             this.cartao = new CartaoResponse(proposta.getCartao());
         }
     }
