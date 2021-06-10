@@ -22,33 +22,33 @@
         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
         KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
 
-    mysql:
-      image: mysql:8.0
-      environment:
-        MYSQL_DATABASE: proposta
-        MYSQL_ROOT_PASSWORD: rooT
-      ports:
-        - 3307:3306
+#    mysql:
+#      image: mysql:8.0
+#      environment:
+#        MYSQL_DATABASE: proposta
+#        MYSQL_ROOT_PASSWORD: rooT
+#      ports:
+#        - 3307:3306
 
-    proposta:
-      build:
-        dockerfile: Dockerfile
-        context: .
-      environment:
-        ANALISE_DOCUMENTO_URL: http://analise:9999
-        URL.ACCOUNTS.API: http://contas:8888
-        DELAY.SCHEDULED: 20000
-        MYSQL_DATABASE: jdbc:mysql://host.docker.internal:3306/proposta?createDatabaseIfNotExist=true
-        MYSQL_USER: root
-        MYSQL_PASSWORD:
-      depends_on:
-        - mysql
-        - analise
-        - contas
-        - transacoes
-      ports:
-        - 8080:8080
-      container_name: proposta
+#    proposta:
+#      build:
+#        dockerfile: Dockerfile
+#        context: .
+#      environment:
+#        ANALISE_DOCUMENTO_URL: http://analise:9999
+#        URL.ACCOUNTS.API: http://contas:8888
+#        DELAY.SCHEDULED: 20000
+#        MYSQL_DATABASE: jdbc:mysql://host.docker.internal:3306/proposta?createDatabaseIfNotExist=true
+#        MYSQL_USER: root
+#        MYSQL_PASSWORD:
+#      depends_on:
+#        - mysql
+#        - analise
+#        - contas
+#        - transacoes
+#      ports:
+#        - 8080:8080
+#      container_name: proposta
 
     postgres:
       image: 'postgres:alpine'

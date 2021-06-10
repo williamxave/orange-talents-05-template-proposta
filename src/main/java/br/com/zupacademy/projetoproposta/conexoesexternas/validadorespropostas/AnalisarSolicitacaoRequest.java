@@ -1,9 +1,8 @@
-package br.com.zupacademy.projetoproposta.dtos;
+package br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas;
 
-import br.com.zupacademy.projetoproposta.exceptionhandler.DocumentException;
+import br.com.zupacademy.projetoproposta.customexceptions.DocumentException;
 import br.com.zupacademy.projetoproposta.models.Proposta;
-import br.com.zupacademy.projetoproposta.conexoesexternas.PropostaFeign;
-import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacaoApiExterna;
+import br.com.zupacademy.projetoproposta.enums.StatusDeValidacaoApiExterna;
 
 import feign.FeignException;
 import org.slf4j.Logger;

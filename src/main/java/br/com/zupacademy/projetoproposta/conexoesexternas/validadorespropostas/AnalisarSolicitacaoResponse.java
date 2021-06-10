@@ -1,8 +1,8 @@
-package br.com.zupacademy.projetoproposta.dtos;
+package br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas;
 
 import br.com.zupacademy.projetoproposta.models.Proposta;
-import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacao;
-import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacaoApiExterna;
+import br.com.zupacademy.projetoproposta.enums.StatusDeValidacao;
+import br.com.zupacademy.projetoproposta.enums.StatusDeValidacaoApiExterna;
 
 public class AnalisarSolicitacaoResponse {
 

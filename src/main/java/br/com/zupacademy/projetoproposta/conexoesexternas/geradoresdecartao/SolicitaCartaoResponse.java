@@ -1,4 +1,4 @@
-package br.com.zupacademy.projetoproposta.dtos;
+package br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao;
 
 import br.com.zupacademy.projetoproposta.models.Cartao;
 import br.com.zupacademy.projetoproposta.models.Vencimento;
@@ -41,7 +41,7 @@ public class SolicitaCartaoResponse {
                this.limite
         );
     }
-    //Gera o VencimentoResponse do cartao, ainda nao está funcionando
+
     public Vencimento geraVencimento(Cartao cartao){
         return new Vencimento(
                 this.vencimento.getId(),

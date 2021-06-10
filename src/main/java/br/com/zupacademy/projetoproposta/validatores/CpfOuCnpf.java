@@ -1,4 +1,4 @@
-package br.com.zupacademy.projetoproposta.validators;
+package br.com.zupacademy.projetoproposta.validatores;
 
 import org.hibernate.validator.constraints.CompositionType;
 import org.hibernate.validator.constraints.ConstraintComposition;

@@ -1,10 +1,10 @@
 package br.com.zupacademy.projetoproposta.dtos;
 
-import br.com.zupacademy.projetoproposta.exceptionhandler.DocumentException;
+import br.com.zupacademy.projetoproposta.customexceptions.DocumentException;
 import br.com.zupacademy.projetoproposta.models.Proposta;
-import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacao;
+import br.com.zupacademy.projetoproposta.enums.StatusDeValidacao;
 import br.com.zupacademy.projetoproposta.repositories.PropostaRepository;
-import br.com.zupacademy.projetoproposta.validators.CpfOuCnpf;
+import br.com.zupacademy.projetoproposta.validatores.CpfOuCnpf;
 import org.springframework.http.HttpStatus;
 
 import javax.persistence.EnumType;

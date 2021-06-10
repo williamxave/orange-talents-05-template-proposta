@@ -1,12 +1,12 @@
 package br.com.zupacademy.projetoproposta.controllers;
 
-import br.com.zupacademy.projetoproposta.dtos.AnalisarSolicitacaoRequest;
-import br.com.zupacademy.projetoproposta.dtos.AnalisarSolicitacaoResponse;
+import br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas.AnalisarSolicitacaoRequest;
+import br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas.AnalisarSolicitacaoResponse;
 import br.com.zupacademy.projetoproposta.dtos.PropostaRequest;
 import br.com.zupacademy.projetoproposta.dtos.PropostaResponse;
-import br.com.zupacademy.projetoproposta.exceptionhandler.DocumentException;
+import br.com.zupacademy.projetoproposta.customexceptions.DocumentException;
 import br.com.zupacademy.projetoproposta.models.Proposta;
-import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacao;
+import br.com.zupacademy.projetoproposta.enums.StatusDeValidacao;
 import br.com.zupacademy.projetoproposta.repositories.PropostaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

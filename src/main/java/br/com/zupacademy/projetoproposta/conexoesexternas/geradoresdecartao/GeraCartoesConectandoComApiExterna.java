@@ -1,7 +1,6 @@
-package br.com.zupacademy.projetoproposta.dtos;
+package br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao;
 
-import br.com.zupacademy.projetoproposta.conexoesexternas.SolicitaCartaoFeign;
-import br.com.zupacademy.projetoproposta.exceptionhandler.DocumentException;
+import br.com.zupacademy.projetoproposta.customexceptions.DocumentException;
 import br.com.zupacademy.projetoproposta.models.Cartao;
 import br.com.zupacademy.projetoproposta.models.Proposta;
 import br.com.zupacademy.projetoproposta.repositories.PropostaRepository;

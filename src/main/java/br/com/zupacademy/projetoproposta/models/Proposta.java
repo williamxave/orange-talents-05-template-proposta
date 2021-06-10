@@ -1,7 +1,7 @@
 package br.com.zupacademy.projetoproposta.models;
 
-import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacao;
-import br.com.zupacademy.projetoproposta.validators.CpfOuCnpf;
+import br.com.zupacademy.projetoproposta.enums.StatusDeValidacao;
+import br.com.zupacademy.projetoproposta.validatores.CpfOuCnpf;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

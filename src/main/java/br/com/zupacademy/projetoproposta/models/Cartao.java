@@ -6,12 +6,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Cartao {
 
+    @Lob
+    private String uuid = UUID.randomUUID().toString().replace("-","");
+
     @Id
     @NotBlank
+    @Column(unique = true)
     private String id;
 
     @NotNull
@@ -23,6 +30,9 @@ public class Cartao {
     @NotNull
     @Min(0)
     private BigDecimal limite;
+
+    @OneToMany(mappedBy = "cartao",cascade = CascadeType.MERGE)
+    private List<Biometria> biometrias = new ArrayList<>();
 
     @Deprecated
     public Cartao(){
@@ -36,6 +46,14 @@ public class Cartao {
         this.emitidoEm = emitidoEm;
         this.titular = titular;
         this.limite = limite;
+    }
+
+    public Biometria pegaAUltimaBiometria(){
+        return biometrias.get(biometrias.size() - 1);
+    }
+
+    public void adicionaBiometria(Biometria novaBiometria){
+        biometrias.add(novaBiometria);
     }
 
     public LocalDateTime getEmitidoEm() {
@@ -52,5 +70,17 @@ public class Cartao {
 
     public String getId() {
         return id;
+    }
+
+    public void setBiometria(List<Biometria> biometrias) {
+        this.biometrias = biometrias;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public List<Biometria> getBiometrias() {
+        return biometrias;
     }
 }

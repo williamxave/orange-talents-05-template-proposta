@@ -1,7 +1,7 @@
-package br.com.zupacademy.projetoproposta.conexoesexternas;
+package br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas;
 
-import br.com.zupacademy.projetoproposta.dtos.AnalisarSolicitacaoRequest;
-import br.com.zupacademy.projetoproposta.dtos.AnalisarSolicitacaoResponse;
+import br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas.AnalisarSolicitacaoRequest;
+import br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas.AnalisarSolicitacaoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

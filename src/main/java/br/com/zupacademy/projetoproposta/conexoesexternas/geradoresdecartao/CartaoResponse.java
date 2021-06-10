@@ -1,4 +1,4 @@
-package br.com.zupacademy.projetoproposta.dtos;
+package br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao;
 
 import br.com.zupacademy.projetoproposta.models.Cartao;
 

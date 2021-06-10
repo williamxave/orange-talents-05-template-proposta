@@ -1,5 +1,6 @@
-package br.com.zupacademy.projetoproposta.dtos;
+package br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao;
 
+import br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao.SolicitaCartaoResponse;
 import br.com.zupacademy.projetoproposta.models.Cartao;
 import br.com.zupacademy.projetoproposta.models.Vencimento;
 import br.com.zupacademy.projetoproposta.repositories.CartaoRepository;
@@ -19,7 +20,7 @@ public class CriarCartao {
     public Cartao criaCartao(SolicitaCartaoResponse solicitaCartaoResponse){
         Cartao possivelCartao = solicitaCartaoResponse.toModel();
         cartaoRepository.save(possivelCartao);
-        Vencimento vencimentoDoCartao =  solicitaCartaoResponse.geraVencimento(possivelCartao);
+        Vencimento vencimentoDoCartao = solicitaCartaoResponse.geraVencimento(possivelCartao);
         vencimentoRepository.save(vencimentoDoCartao);
        return possivelCartao;
     }

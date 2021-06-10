@@ -1,9 +1,8 @@
 package br.com.zupacademy.projetoproposta.dtos;
 
-import br.com.zupacademy.projetoproposta.models.Cartao;
+import br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao.CartaoResponse;
 import br.com.zupacademy.projetoproposta.models.Proposta;
-import br.com.zupacademy.projetoproposta.models.enums.StatusDeValidacao;
-import br.com.zupacademy.projetoproposta.repositories.VencimentoRepository;
+import br.com.zupacademy.projetoproposta.enums.StatusDeValidacao;
 
 import java.math.BigDecimal;
 

@@ -1,9 +1,9 @@
 package br.com.zupacademy.projetoproposta.exceptionhandler;
 
+import br.com.zupacademy.projetoproposta.customexceptions.DocumentException;
 import br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares.CampoDeMessagem;
 import br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares.ErroPadrao;
 import br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares.ValidadorDeErro;
-import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

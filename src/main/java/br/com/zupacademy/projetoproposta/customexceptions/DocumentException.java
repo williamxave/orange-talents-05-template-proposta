@@ -1,4 +1,4 @@
-package br.com.zupacademy.projetoproposta.exceptionhandler;
+package br.com.zupacademy.projetoproposta.customexceptions;
 
 import org.springframework.http.HttpStatus;
 
