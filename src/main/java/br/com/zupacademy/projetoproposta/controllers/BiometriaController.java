@@ -37,7 +37,7 @@ public class BiometriaController {
             cartao.get().adicionaBiometria(biometria);
             cartaoRepository.save(cartao.get());
             biometria = cartao.get().pegaAUltimaBiometria();
-            URI uri = builder.path("/biometria/{uuid}").buildAndExpand(biometria.getUuid()).toUri();
+            URI uri = builder.path("/{uuid}/biometria").buildAndExpand(biometria.getUuid()).toUri();
             return ResponseEntity.created(uri).build();
     }
 }
