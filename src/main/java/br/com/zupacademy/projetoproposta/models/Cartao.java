@@ -1,5 +1,7 @@
 package br.com.zupacademy.projetoproposta.models;
 
+import br.com.zupacademy.projetoproposta.enums.StatusDeBloqueio;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -34,6 +36,12 @@ public class Cartao {
     @OneToMany(mappedBy = "cartao",cascade = CascadeType.MERGE)
     private List<Biometria> biometrias = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private StatusDeBloqueio statusDeBloqueio;
+
+    @OneToMany
+    private List<BloqueioCartao> bloqueioCartoes = new ArrayList<>();
+
     @Deprecated
     public Cartao(){
     }
@@ -46,6 +54,21 @@ public class Cartao {
         this.emitidoEm = emitidoEm;
         this.titular = titular;
         this.limite = limite;
+    }
+
+    public List<BloqueioCartao> getBloqueioCartaos() {
+        return bloqueioCartoes;
+    }
+    public void addBloqueioAoCartao(BloqueioCartao bloqueioCartao) {
+         bloqueioCartoes.add(bloqueioCartao);
+    }
+
+    public StatusDeBloqueio getStatusDeBloqueio() {
+        return statusDeBloqueio;
+    }
+
+    public void setStatusDeBloqueio(StatusDeBloqueio statusDeBloqueio) {
+        this.statusDeBloqueio = statusDeBloqueio;
     }
 
     public Biometria pegaAUltimaBiometria(){

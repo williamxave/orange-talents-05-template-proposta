@@ -13,11 +13,12 @@ public class ConfiguracoesDeSeguranca extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorizeRequests ->
+        http.csrf().disable().
+                authorizeRequests(authorizeRequests ->
                 authorizeRequests
                 .antMatchers(HttpMethod.GET,"/proposta/*").hasAuthority("SCOPE_user")
                 .antMatchers(HttpMethod.POST,"/proposta").hasAuthority("SCOPE_user")
-                .antMatchers(HttpMethod.POST,"/cartao/*").hasAuthority("SCOPE_user")
+                .antMatchers(HttpMethod.POST,"/cartao/**").permitAll()
                 .anyRequest().authenticated()
         )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
