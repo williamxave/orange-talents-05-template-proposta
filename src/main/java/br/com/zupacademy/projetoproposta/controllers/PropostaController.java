@@ -5,6 +5,7 @@ import br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas.A
 import br.com.zupacademy.projetoproposta.dtos.PropostaRequest;
 import br.com.zupacademy.projetoproposta.dtos.PropostaResponse;
 import br.com.zupacademy.projetoproposta.customexceptions.DocumentException;
+import br.com.zupacademy.projetoproposta.health.ConfigMetricas;
 import br.com.zupacademy.projetoproposta.models.Proposta;
 import br.com.zupacademy.projetoproposta.enums.StatusDeValidacao;
 import br.com.zupacademy.projetoproposta.repositories.PropostaRepository;
@@ -23,20 +24,33 @@ import java.util.Optional;
 @RequestMapping(value = "/proposta")
 public class PropostaController {
 
-    @Autowired
     private AnalisarSolicitacaoRequest analisarSolicitacaoRequest;
 
-    @Autowired
     private PropostaRepository propostaRepository;
 
+    private ConfigMetricas configMetricas;
+
+    public PropostaController(AnalisarSolicitacaoRequest analisarSolicitacaoRequest,
+                              PropostaRepository propostaRepository, ConfigMetricas configMetricas
+                              ) {
+        this.analisarSolicitacaoRequest = analisarSolicitacaoRequest;
+        this.propostaRepository = propostaRepository;
+        this.configMetricas = configMetricas;
+
+    }
+
     @PostMapping
-    public ResponseEntity<AnalisarSolicitacaoResponse> cadastraProposta(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder builder) throws DocumentException{
+    public ResponseEntity<AnalisarSolicitacaoResponse> cadastraProposta(@RequestBody @Valid PropostaRequest request,
+                                                                        UriComponentsBuilder builder) throws DocumentException{
+
             //Verifica a duplicidade da proposta, transforma em model e salva no banco
             Proposta possivelProsta = request.verificaDuplicidadeDeDocumento(request,propostaRepository);
             //Manda a proposta para a api externa que vai fazer a analise
             AnalisarSolicitacaoResponse analisarSolicitacaoResponse = analisarSolicitacaoRequest.validacaoDeDocumento(possivelProsta);
             //Faz a alteração do status da api externa para o status da aplicação
             analisarSolicitacaoResponse.alteraStatusDaProposta(possivelProsta);
+            //Metrica para contar quantas propostas foram cadastradas
+            configMetricas.addProposta();
             propostaRepository.save(possivelProsta);
             URI uri = builder.path("/proposta/{id}").buildAndExpand(possivelProsta.getId()).toUri();
             if(possivelProsta.getStatusDeValidacao().equals(StatusDeValidacao.NAO_ELEGIVEL)){
