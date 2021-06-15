@@ -16,7 +16,7 @@ import java.util.UUID;
 public class Cartao {
 
     @Lob
-    private String uuid = UUID.randomUUID().toString().replace("-","");
+    private String uuid = UUID.randomUUID().toString().replace("-", "");
 
     @Id
     @NotBlank
@@ -33,7 +33,7 @@ public class Cartao {
     @Min(0)
     private BigDecimal limite;
 
-    @OneToMany(mappedBy = "cartao",cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
     private List<Biometria> biometrias = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -43,8 +43,9 @@ public class Cartao {
     private List<BloqueioCartao> bloqueioCartoes = new ArrayList<>();
 
     @Deprecated
-    public Cartao(){
+    public Cartao() {
     }
+
     public Cartao(String id,
                   LocalDateTime emitidoEm,
                   String titular,
@@ -59,8 +60,9 @@ public class Cartao {
     public List<BloqueioCartao> getBloqueioCartaos() {
         return bloqueioCartoes;
     }
+
     public void addBloqueioAoCartao(BloqueioCartao bloqueioCartao) {
-         bloqueioCartoes.add(bloqueioCartao);
+        bloqueioCartoes.add(bloqueioCartao);
     }
 
     public StatusDeBloqueio getStatusDeBloqueio() {
@@ -71,11 +73,11 @@ public class Cartao {
         this.statusDeBloqueio = statusDeBloqueio;
     }
 
-    public Biometria pegaAUltimaBiometria(){
+    public Biometria pegaAUltimaBiometria() {
         return biometrias.get(biometrias.size() - 1);
     }
 
-    public void adicionaBiometria(Biometria novaBiometria){
+    public void adicionaBiometria(Biometria novaBiometria) {
         biometrias.add(novaBiometria);
     }
 
@@ -105,5 +107,20 @@ public class Cartao {
 
     public List<Biometria> getBiometrias() {
         return biometrias;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Cartao{" +
+                "uuid='" + uuid + '\'' +
+                ", id='" + id + '\'' +
+                ", emitidoEm=" + emitidoEm +
+                ", titular='" + titular + '\'' +
+                ", limite=" + limite +
+                ", biometrias=" + biometrias +
+                ", statusDeBloqueio=" + statusDeBloqueio +
+                ", bloqueioCartoes=" + bloqueioCartoes +
+                '}';
     }
 }

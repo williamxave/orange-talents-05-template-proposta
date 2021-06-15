@@ -1,7 +1,6 @@
 package br.com.zupacademy.projetoproposta.controllers;
 
 import br.com.zupacademy.projetoproposta.conexoesexternas.avisoviagemapiexterna.AvisoViagemRequestApiExterna;
-import br.com.zupacademy.projetoproposta.conexoesexternas.avisoviagemapiexterna.AvisoViagemResponseApiExterna;
 import br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao.SolicitaCartaoFeign;
 import br.com.zupacademy.projetoproposta.customexceptions.DocumentException;
 import br.com.zupacademy.projetoproposta.dtos.AvisoViagemRequest;

@@ -1,6 +1,5 @@
 package br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao;
 
-import br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao.SolicitaCartaoResponse;
 import br.com.zupacademy.projetoproposta.models.Cartao;
 import br.com.zupacademy.projetoproposta.models.Vencimento;
 import br.com.zupacademy.projetoproposta.repositories.CartaoRepository;

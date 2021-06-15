@@ -1,7 +1,6 @@
 package br.com.zupacademy.projetoproposta.conexoesexternas.validadorespropostas;
 
 import br.com.zupacademy.projetoproposta.customexceptions.DocumentException;
-import br.com.zupacademy.projetoproposta.health.ConfigMetricas;
 import br.com.zupacademy.projetoproposta.models.Proposta;
 import br.com.zupacademy.projetoproposta.enums.StatusDeValidacaoApiExterna;
 

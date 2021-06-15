@@ -1,9 +1,6 @@
 package br.com.zupacademy.projetoproposta.dtos;
-import br.com.zupacademy.projetoproposta.enums.StatusDeBloqueio;
-import br.com.zupacademy.projetoproposta.exceptionhandler.classesauxiliares.CampoDeMessagem;
 import br.com.zupacademy.projetoproposta.models.BloqueioCartao;
-import br.com.zupacademy.projetoproposta.models.Cartao;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

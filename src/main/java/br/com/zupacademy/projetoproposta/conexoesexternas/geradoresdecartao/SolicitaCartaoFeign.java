@@ -4,6 +4,8 @@ import br.com.zupacademy.projetoproposta.conexoesexternas.avisoviagemapiexterna.
 import br.com.zupacademy.projetoproposta.conexoesexternas.avisoviagemapiexterna.AvisoViagemResponseApiExterna;
 import br.com.zupacademy.projetoproposta.conexoesexternas.bloqueiodocartao.BloqueioCartaoRequest;
 import br.com.zupacademy.projetoproposta.conexoesexternas.bloqueiodocartao.BloqueioCartaoResponse;
+import br.com.zupacademy.projetoproposta.conexoesexternas.solicitacarteiraapiexterna.CarteiraReponseApiExterna;
+import br.com.zupacademy.projetoproposta.conexoesexternas.solicitacarteiraapiexterna.CarteiraRequestApiExterna;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,5 +23,8 @@ public interface SolicitaCartaoFeign {
     @RequestMapping(method = RequestMethod.POST,path = "/{uuid}/avisos",consumes ="application/json", produces = "application/json")
     AvisoViagemResponseApiExterna avisoViagemParaApiExterna(@PathVariable(name = "uuid") String uuid,
                                                             @Valid @RequestBody AvisoViagemRequestApiExterna avisoViagemRequestApiExterna);
+
+    @RequestMapping(method = RequestMethod.POST, path = "/{uuid}/carteiras",consumes ="application/json", produces = "application/json")
+    CarteiraReponseApiExterna associaCarteira(@PathVariable(name = "uuid") String uuid, @Valid @RequestBody CarteiraRequestApiExterna request);
 
 }
