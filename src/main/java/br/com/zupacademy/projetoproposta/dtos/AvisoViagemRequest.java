@@ -1,7 +1,10 @@
 package br.com.zupacademy.projetoproposta.dtos;
-
+import br.com.zupacademy.projetoproposta.conexoesexternas.geradoresdecartao.SolicitaCartaoFeign;
 import br.com.zupacademy.projetoproposta.models.AvisoDeViagem;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Future;
@@ -11,31 +14,30 @@ import java.time.LocalDate;
 
 public class AvisoViagemRequest {
 
-    @NotBlank
-    private String uuidCartao;
+    @Autowired
+    private SolicitaCartaoFeign solicitaCartaoFeign;
 
     @NotBlank
-    private String destinoDaViagem;
+    private String destino;
 
     @NotNull
     @Future
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    private LocalDate dataDoTerminoDaViagem;
+    private LocalDate validoAte;
 
-    public AvisoViagemRequest(@NotBlank String uuidCartao,
-                              @NotBlank String destinoDaViagem,
-                              @NotNull @Future LocalDate dataDoTerminoDaViagem) {
-        this.uuidCartao = uuidCartao;
-        this.destinoDaViagem = destinoDaViagem;
-        this.dataDoTerminoDaViagem = dataDoTerminoDaViagem;
+    public AvisoViagemRequest(
+                              @NotBlank String destino,
+                              @NotNull @Future LocalDate validoAte) {
+        this.destino = destino;
+        this.validoAte = validoAte;
     }
 
 
-    public AvisoDeViagem toModel(HttpServletRequest request) {
+    public AvisoDeViagem toModel(HttpServletRequest request,String uuidCartao) {
         return new AvisoDeViagem(
-                this.uuidCartao,
-                this.destinoDaViagem,
-                this.dataDoTerminoDaViagem,
+                uuidCartao,
+                this.destino,
+                this.validoAte,
                 pegarIpDoCliente(request),
                 pegarUserAgent(request)
         );
@@ -54,15 +56,12 @@ public class AvisoViagemRequest {
         return userAgent;
     }
 
-    public String getDestinoDaViagem() {
-        return destinoDaViagem;
+    public String getDestino() {
+        return destino;
     }
 
-    public LocalDate getDataDoTerminoDaViagem() {
-        return dataDoTerminoDaViagem;
-    }
-    public String getUuidCartao() {
-        return uuidCartao;
+    public LocalDate getValidoAte() {
+        return validoAte;
     }
 
 }
