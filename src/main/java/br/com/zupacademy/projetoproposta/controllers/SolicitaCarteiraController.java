@@ -44,22 +44,22 @@ public class SolicitaCarteiraController {
         Optional<Cartao> possivelCartao = Optional.ofNullable(cartaoRepository.findByUuid(uuid).orElseThrow(
                 () -> new DocumentException(HttpStatus.NOT_FOUND, "Cartão não encontrado! Tente outrow")));
 
-        //Valida a carteira
-        boolean naoDeveRepetirACarteira = TipoDeCarteira.verificaCarteira(carteiraRequest.getCarteira());
+        //Verifica se a carteira que veio da request existe no sistema
+        boolean carteiraPrecisaSerValida = TipoDeCarteira.verificaCarteira(carteiraRequest.getNomeDaCarteira());
 
-        if(naoDeveRepetirACarteira) {
-            CarteiraRequestApiExterna carteiraRequestApiExterna = new CarteiraRequestApiExterna(carteiraRequest.getEmail(), carteiraRequest.getCarteira());
-
+        if(carteiraPrecisaSerValida) {
+            CarteiraRequestApiExterna carteiraRequestApiExterna = new CarteiraRequestApiExterna(carteiraRequest.getEmail(), carteiraRequest.getNomeDaCarteira());
+            associaCarteira(uuid, carteiraRequestApiExterna);
             validaCarteiraIgual(carteiraRequest,possivelCartao.get());
 
-            associaCarteira(uuid, carteiraRequestApiExterna);
             Carteira carteira = carteiraRequest.toModel(possivelCartao.get());
             cartaoRepository.save(possivelCartao.get());
             carteiraRepository.save(carteira);
             URI uri =  builder.path("/carteira/{uuid}").buildAndExpand(carteira.getUuid()).toUri();
             return  ResponseEntity.created(uri).build();
         }
-        return ResponseEntity.badRequest().body(new CampoDeMessagem("Carteira","Carteira está inválida " + carteiraRequest.getCarteira()));
+        return ResponseEntity.badRequest().body(new CampoDeMessagem("Carteira",
+                                                    "Carteira está inválida! A carteira [ " + carteiraRequest.getNomeDaCarteira() + " ] não existe"));
     }
 
     private void associaCarteira(String uuidCartao,CarteiraRequestApiExterna requestApiExterna)throws DocumentException {
@@ -70,9 +70,10 @@ public class SolicitaCarteiraController {
         }
     }
 
-    //Preciso rever isso,
+    //Preciso rever isso
     public  void validaCarteiraIgual(CarteiraRequest carteiraRequest, Cartao cartao){
-       Optional<Carteira> carteira = carteiraRepository.findByCarteiraAndCartaoId(TipoDeCarteira.valueOf(carteiraRequest.getCarteira()),cartao.getId());
+      Optional<Carteira> carteira = carteiraRepository.findByNomeDaCarteiraAndCartaoId(TipoDeCarteira.valueOf(carteiraRequest.getNomeDaCarteira()),cartao.getId());
+       //Optional<Carteira> carteira = carteiraRepository.buscar(cartao.getId());
         if(carteira.isPresent()){
             new DocumentException(HttpStatus.UNPROCESSABLE_ENTITY, "Carteira já vinculada a esse cartão");
         }

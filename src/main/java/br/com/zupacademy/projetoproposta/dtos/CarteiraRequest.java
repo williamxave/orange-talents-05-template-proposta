@@ -13,15 +13,15 @@ public class CarteiraRequest {
     private String email;
 
     @NotNull
-    private String carteira;
+    private String nomeDaCarteira;
 
-    public CarteiraRequest(String email, String carteira) {
+    public CarteiraRequest(String email, String nomeDaCarteira) {
         this.email = email;
-        this.carteira = carteira;
+        this.nomeDaCarteira = nomeDaCarteira;
     }
 
-    public String getCarteira() {
-        return carteira;
+    public String getNomeDaCarteira() {
+        return nomeDaCarteira;
     }
     public String getEmail() {
         return email;
@@ -32,7 +32,7 @@ public class CarteiraRequest {
         return new Carteira(
                 this.email,
                 cartao,
-                TipoDeCarteira.valueOf(this.carteira));
+                TipoDeCarteira.valueOf(this.nomeDaCarteira));
     }
 
 }

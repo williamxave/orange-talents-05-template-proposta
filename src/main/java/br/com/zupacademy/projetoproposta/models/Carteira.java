@@ -30,14 +30,14 @@ public class Carteira {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private TipoDeCarteira carteira;
+    private TipoDeCarteira nomeDaCarteira;
 
     public Carteira(@NotBlank @Email String email,
                     @NotBlank Cartao cartao,
-                    @NotNull TipoDeCarteira carteira) {
+                    @NotNull TipoDeCarteira nomeDaCarteira) {
         this.email = email;
         this.cartao = cartao;
-        this.carteira = carteira;
+        this.nomeDaCarteira = nomeDaCarteira;
     }
 
     @Deprecated
@@ -48,8 +48,8 @@ public class Carteira {
         return id;
     }
 
-    public TipoDeCarteira getCarteira() {
-        return carteira;
+    public TipoDeCarteira getNomeDaCarteira() {
+        return nomeDaCarteira;
     }
 
     public String getUuid() {
@@ -63,7 +63,7 @@ public class Carteira {
                 ", email='" + email + '\'' +
                 ", uuid='" + uuid + '\'' +
                 ", cartao=" + cartao +
-                ", carteira=" + carteira +
+                ", carteira=" + nomeDaCarteira +
                 '}';
     }
 }

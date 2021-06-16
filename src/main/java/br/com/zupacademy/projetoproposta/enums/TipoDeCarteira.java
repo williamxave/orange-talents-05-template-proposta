@@ -2,9 +2,9 @@ package br.com.zupacademy.projetoproposta.enums;
 
 public enum TipoDeCarteira {
 
-    PAYPAL;
+    PAYPAL, SAMSUNG_PAY;
 
-    //Valida a carteira
+    //Valida a carteira que veio da request
     public static boolean verificaCarteira(String possivelCarteira) {
         for (TipoDeCarteira carteira : TipoDeCarteira.values()) {
             if (carteira.name().equals(possivelCarteira)) {
@@ -13,6 +13,5 @@ public enum TipoDeCarteira {
         }
         return false;
     }
-
 }
 
