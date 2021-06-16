@@ -44,7 +44,7 @@ public class PropostaController {
                                                                         UriComponentsBuilder builder) throws DocumentException{
         Span activeSpan = tracer.activeSpan();
         activeSpan.setTag("user.email", request.getEmail());
-        activeSpan.setBaggageItem("use.email", request.getEmail());
+        activeSpan.setBaggageItem("user.email", request.getEmail());
         activeSpan.log("Proposta Criada para o e-mail " + request.getEmail());
 
             //Verifica a duplicidade da proposta, transforma em model e salva no banco

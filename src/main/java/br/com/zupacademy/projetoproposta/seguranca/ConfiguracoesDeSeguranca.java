@@ -16,7 +16,7 @@ public class ConfiguracoesDeSeguranca extends WebSecurityConfigurerAdapter {
         http.csrf().disable().
                 authorizeRequests(authorizeRequests ->
                 authorizeRequests
-                        .antMatchers(HttpMethod.GET,"/actuator/prometheus").permitAll()
+                        .antMatchers("/actuator/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/proposta/*").hasAuthority("SCOPE_user")
                 .antMatchers(HttpMethod.POST,"/proposta").hasAuthority("SCOPE_user")
                 .antMatchers(HttpMethod.POST,"/cartao/**").hasAuthority("SCOPE_user")

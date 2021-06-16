@@ -1,4 +1,9 @@
   version: '3'
+
+  networks:
+    propostas-network:
+      driver: bridge
+
   services:
 
     zookeeper:
@@ -7,6 +12,8 @@
         ZOOKEEPER_CLIENT_PORT: 2181
         ZOOKEEPER_TICK_TIME: 2000
         ZOOKEEPER_SYNC_LIMIT: 2
+      networks:
+        - propostas-network
 
     kafka:
       image: "confluentinc/cp-kafka:5.2.1"
@@ -21,34 +28,43 @@
         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
         KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      networks:
+        - propostas-network
 
-#    mysql:
-#      image: mysql:8.0
-#      environment:
-#        MYSQL_DATABASE: proposta
-#        MYSQL_ROOT_PASSWORD: rooT
-#      ports:
-#        - 3307:3306
+    mysql:
+      image: mysql:8.0
+      environment:
+        MYSQL_DATABASE: proposta
+        MYSQL_ROOT_PASSWORD: rooT
+      ports:
+        - 3307:3306
+      networks:
+        - propostas-network
 
-#    proposta:
-#      build:
-#        dockerfile: Dockerfile
-#        context: .
-#      environment:
-#        ANALISE_DOCUMENTO_URL: http://analise:9999
-#        URL.ACCOUNTS.API: http://contas:8888
-#        DELAY.SCHEDULED: 20000
-#        MYSQL_DATABASE: jdbc:mysql://host.docker.internal:3306/proposta?createDatabaseIfNotExist=true
-#        MYSQL_USER: root
-#        MYSQL_PASSWORD:
-#      depends_on:
-#        - mysql
-#        - analise
-#        - contas
-#        - transacoes
-#      ports:
-#        - 8080:8080
-#      container_name: proposta
+    proposta:
+      build:
+        dockerfile: Dockerfile
+        context: .
+      environment:
+        URL.ACCOUNTS.API: http://contas:8888
+        JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+        ANALISE_DOCUMENTO_URL: http://localhost:9999/api/solicitacao
+        KEYCLOAK_ISSUER_URI: http://localhost:18080/auth/realms/demo
+        KEYCLOAK_JWKS_URI: http://localhost:18080/auth/realms/demo/protocol/openid-connect/certs
+        DELAY.SCHEDULED: 20000
+        MYSQL_DATABASE: jdbc:mysql://host.docker.internal:3306/proposta?createDatabaseIfNotExist=true
+        MYSQL_USER: root
+        MYSQL_PASSWORD:
+      depends_on:
+        - mysql
+        - analise
+        - contas
+        - transacoes
+      ports:
+        - 8080:8080
+      container_name: proposta
+      networks:
+        - propostas-network
 
     postgres:
       image: 'postgres:alpine'
@@ -61,6 +77,8 @@
         POSTGRES_PASSWORD: password
         POSTGRES_DB: keycloak
         POSTGRES_HOST: postgres
+      networks:
+        - propostas-network
 
     keycloak:
       image: jboss/keycloak
@@ -89,7 +107,9 @@
         KEYCLOAK_USER: admin
         KEYCLOAK_PASSWORD: Pa55w0rd
         POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
-#        KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
+        KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
+      networks:
+        - propostas-network
 
     analise:
       image: 'zupacademy/analise-financeira'
@@ -100,6 +120,8 @@
         LOG_LEVEL: INFO
         URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
         JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      networks:
+        - propostas-network
 
     contas:
       image: 'zupacademy/contas'
@@ -109,6 +131,8 @@
         SERVER_PORT: 8888
         LOG_LEVEL: INFO
         JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      networks:
+        - propostas-network
 
     transacoes:
       image: 'zupacademy/transacoes'
@@ -121,6 +145,8 @@
         LOG_LEVEL: INFO
         KAFKA_HOST: "kafka:29092"
         JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      networks:
+        - propostas-network
 
     jaeger:
       image: jaegertracing/all-in-one
@@ -135,14 +161,19 @@
         - 9411:9411
       environment:
         COLLECTOR_ZIPKIN_HTTP_PORT: 9411
+      networks:
+        - propostas-network
 
     prometheus:
       image: prom/prometheus
       volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
         - prometheus-volume:/etc/prometheus/
-      network_mode: bridge
       ports:
         - "9090:9090"
+      network_mode: bridge
+      depends_on:
+        - proposta
 
     grafana:
       image: grafana/grafana
@@ -162,6 +193,8 @@
         VAULT_DEV_ROOT_TOKEN_ID: ee413645-dbe8-4848-afc6-6bb2768ada75
         VAULT_TOKEN: ee413645-dbe8-4848-afc6-6bb2768ada75
         VAULT_ADDR: http://127.0.0.1:8200
+      networks:
+        - propostas-network
 
   volumes:
     grafana-volume:
