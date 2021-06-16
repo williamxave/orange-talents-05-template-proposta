@@ -23,9 +23,9 @@ import javax.validation.Valid;
 public class AvisoViagemController {
     private static final Logger logger = LoggerFactory.getLogger(AvisoViagemController.class);
 
-    private CartaoRepository cartaoRepository;
-    private AvisoDeViagemRepository avisoDeViagemRepository;
-    private SolicitaCartaoFeign solicitaCartaoFeign;
+    private final CartaoRepository cartaoRepository;
+    private final AvisoDeViagemRepository avisoDeViagemRepository;
+    private final SolicitaCartaoFeign solicitaCartaoFeign;
 
     public AvisoViagemController(CartaoRepository cartaoRepository,
                                  AvisoDeViagemRepository avisoDeViagemRepository,

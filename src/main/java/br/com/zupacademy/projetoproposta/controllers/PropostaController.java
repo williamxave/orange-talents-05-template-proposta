@@ -10,6 +10,8 @@ import br.com.zupacademy.projetoproposta.models.Proposta;
 import br.com.zupacademy.projetoproposta.enums.StatusDeValidacao;
 import br.com.zupacademy.projetoproposta.repositories.PropostaRepository;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,24 +25,27 @@ import java.util.Optional;
 @RequestMapping(value = "/proposta")
 public class PropostaController {
 
-    private AnalisarSolicitacaoRequest analisarSolicitacaoRequest;
-
-    private PropostaRepository propostaRepository;
-
-    private ConfigMetricas configMetricas;
+    private final AnalisarSolicitacaoRequest analisarSolicitacaoRequest;
+    private final PropostaRepository propostaRepository;
+    private final ConfigMetricas configMetricas;
+    private final Tracer tracer;
 
     public PropostaController(AnalisarSolicitacaoRequest analisarSolicitacaoRequest,
-                              PropostaRepository propostaRepository, ConfigMetricas configMetricas
-                              ) {
+                              PropostaRepository propostaRepository, ConfigMetricas configMetricas,
+                              Tracer tracer) {
         this.analisarSolicitacaoRequest = analisarSolicitacaoRequest;
         this.propostaRepository = propostaRepository;
         this.configMetricas = configMetricas;
-
+        this.tracer = tracer;
     }
 
     @PostMapping
     public ResponseEntity<AnalisarSolicitacaoResponse> cadastraProposta(@RequestBody @Valid PropostaRequest request,
                                                                         UriComponentsBuilder builder) throws DocumentException{
+        Span activeSpan = tracer.activeSpan();
+        activeSpan.setTag("user.email", request.getEmail());
+        activeSpan.setBaggageItem("use.email", request.getEmail());
+        activeSpan.log("Proposta Criada para o e-mail " + request.getEmail());
 
             //Verifica a duplicidade da proposta, transforma em model e salva no banco
             Proposta possivelProsta = request.verificaDuplicidadeDeDocumento(request,propostaRepository);

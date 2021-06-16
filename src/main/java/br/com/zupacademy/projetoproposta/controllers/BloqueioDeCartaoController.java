@@ -13,6 +13,8 @@ import br.com.zupacademy.projetoproposta.repositories.BloqueioCartaoRepository;
 import br.com.zupacademy.projetoproposta.repositories.CartaoRepository;
 
 import feign.FeignException;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,20 +31,17 @@ import javax.servlet.http.HttpServletRequest;
 public class BloqueioDeCartaoController {
     private static  final Logger logger = LoggerFactory.getLogger(BloqueioDeCartaoController.class);
 
-    private CartaoRepository cartaoRepository;
-
-    private BloqueioRequest bloqueioRequest;
-
-    private BloqueioCartaoRepository bloqueioCartaoRepository;
-
-    private SolicitaCartaoFeign solicitaCartaoFeign;
+    private final CartaoRepository cartaoRepository;
+    private final BloqueioRequest bloqueioRequest;
+    private final BloqueioCartaoRepository bloqueioCartaoRepository;
+    private final SolicitaCartaoFeign solicitaCartaoFeign;
 
 
     public BloqueioDeCartaoController(CartaoRepository cartaoRepository,
                                       BloqueioRequest bloqueioRequest,
                                       BloqueioCartaoRepository bloqueioCartaoRepository,
                                       SolicitaCartaoFeign solicitaCartaoFeign
-                                       ) {
+    ) {
         this.cartaoRepository = cartaoRepository;
         this.bloqueioRequest = bloqueioRequest;
         this.bloqueioCartaoRepository = bloqueioCartaoRepository;
@@ -53,6 +52,7 @@ public class BloqueioDeCartaoController {
     public ResponseEntity<?> bloqueioDeCartao (@PathVariable("uuid") String uuid,
                                                HttpServletRequest request
                                                     )throws  DocumentException {
+
         Cartao possivelCartao = cartaoRepository.findByUuid(uuid).get();
         if(possivelCartao.getStatusDeBloqueio() == StatusDeBloqueio.BLOQUEADO){
             return ResponseEntity.unprocessableEntity().body(new CampoDeMessagem("Documento", "O cartão já está bloqueado"));

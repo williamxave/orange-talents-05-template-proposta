@@ -25,9 +25,9 @@ import java.util.Optional;
 @RequestMapping("/carteira")
 public class SolicitaCarteiraController {
 
-    private CartaoRepository cartaoRepository;
-    private SolicitaCartaoFeign solicitaCartaoFeign;
-    private CarteiraRepository carteiraRepository;
+    private final CartaoRepository cartaoRepository;
+    private final SolicitaCartaoFeign solicitaCartaoFeign;
+    private final CarteiraRepository carteiraRepository;
 
     public SolicitaCarteiraController(CartaoRepository cartaoRepository,
                                       SolicitaCartaoFeign solicitaCartaoFeign,

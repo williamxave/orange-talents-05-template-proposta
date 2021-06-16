@@ -19,8 +19,8 @@ import java.util.Optional;
 @RequestMapping("/cartao")
 public class BiometriaController {
 
-    private CartaoRepository cartaoRepository;
-    private BiometriaRepository biometriaRepository;
+    private final CartaoRepository cartaoRepository;
+    private final BiometriaRepository biometriaRepository;
 
     public BiometriaController(CartaoRepository cartaoRepository, BiometriaRepository biometriaRepository) {
         this.cartaoRepository = cartaoRepository;
