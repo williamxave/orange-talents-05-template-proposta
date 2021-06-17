@@ -2,8 +2,10 @@ package br.com.zupacademy.projetoproposta.models;
 
 import br.com.zupacademy.projetoproposta.enums.StatusDeValidacao;
 import br.com.zupacademy.projetoproposta.validatores.CpfOuCnpf;
+import org.springframework.security.crypto.encrypt.Encryptors;
 
 import javax.persistence.*;
+
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
@@ -18,7 +20,7 @@ public class Proposta {
     private String nome;
 
     @NotBlank
-    @CpfOuCnpf
+    //@CpfOuCnpf
     private String documento;
 
     @Email
@@ -85,4 +87,5 @@ public class Proposta {
     public void setCartao(Cartao cartao) {
         this.cartao = cartao;
     }
+
 }

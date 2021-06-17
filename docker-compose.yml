@@ -31,40 +31,40 @@
       networks:
         - propostas-network
 
-    mysql:
-      image: mysql:8.0
-      environment:
-        MYSQL_DATABASE: proposta
-        MYSQL_ROOT_PASSWORD: rooT
-      ports:
-        - 3307:3306
-      networks:
-        - propostas-network
-
-    proposta:
-      build:
-        dockerfile: Dockerfile
-        context: .
-      environment:
-        URL.ACCOUNTS.API: http://contas:8888
-        JAEGER_ENDPOINT: http://jaeger:14268/api/traces
-        ANALISE_DOCUMENTO_URL: http://localhost:9999/api/solicitacao
-        KEYCLOAK_ISSUER_URI: http://localhost:18080/auth/realms/demo
-        KEYCLOAK_JWKS_URI: http://localhost:18080/auth/realms/demo/protocol/openid-connect/certs
-        DELAY.SCHEDULED: 20000
-        MYSQL_DATABASE: jdbc:mysql://host.docker.internal:3306/proposta?createDatabaseIfNotExist=true
-        MYSQL_USER: root
-        MYSQL_PASSWORD:
-      depends_on:
-        - mysql
-        - analise
-        - contas
-        - transacoes
-      ports:
-        - 8080:8080
-      container_name: proposta
-      networks:
-        - propostas-network
+#    mysql:
+#      image: mysql:8.0
+#      environment:
+#        MYSQL_DATABASE: proposta
+#        MYSQL_ROOT_PASSWORD: rooT
+#      ports:
+#        - 3307:3306
+#      networks:
+#        - propostas-network
+#
+#    proposta:
+#      build:
+#        dockerfile: Dockerfile
+#        context: .
+#      environment:
+#        URL.ACCOUNTS.API: http://contas:8888
+#        JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+#        ANALISE_DOCUMENTO_URL: http://localhost:9999/api/solicitacao
+#        KEYCLOAK_ISSUER_URI: http://localhost:18080/auth/realms/demo
+#        KEYCLOAK_JWKS_URI: http://localhost:18080/auth/realms/demo/protocol/openid-connect/certs
+#        DELAY.SCHEDULED: 20000
+#        MYSQL_DATABASE: jdbc:mysql://host.docker.internal:3306/proposta?createDatabaseIfNotExist=true
+#        MYSQL_USER: root
+#        MYSQL_PASSWORD:
+#      depends_on:
+#        - mysql
+#        - analise
+#        - contas
+#        - transacoes
+#      ports:
+#        - 8080:8080
+#      container_name: proposta
+#      networks:
+#        - propostas-network
 
     postgres:
       image: 'postgres:alpine'
@@ -107,7 +107,7 @@
         KEYCLOAK_USER: admin
         KEYCLOAK_PASSWORD: Pa55w0rd
         POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
-        KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
+       #KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
       networks:
         - propostas-network
 
@@ -172,8 +172,8 @@
       ports:
         - "9090:9090"
       network_mode: bridge
-      depends_on:
-        - proposta
+#      depends_on:
+#        - proposta
 
     grafana:
       image: grafana/grafana
